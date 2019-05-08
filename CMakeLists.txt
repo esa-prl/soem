@@ -11,6 +11,11 @@ set(SOEM_INCLUDE_INSTALL_DIR include/soem)
 set(SOEM_LIB_INSTALL_DIR lib)
 set(BUILD_TESTS TRUE)
 
+# Used for pkg-config
+set(PREFIX "${CMAKE_INSTALL_PREFIX}")
+set(EXEC_PREFIX "${CMAKE_INSTALL_PREFIX}")
+set(VERSION 0.1)
+
 if(WIN32)
   set(OS "win32")
   include_directories(oshw/win32/wpcap/Include)
@@ -24,7 +29,7 @@ if(WIN32)
   set(OS_LIBS wpcap.lib Packet.lib Ws2_32.lib Winmm.lib)
 elseif(UNIX)
   set(OS "linux")
-  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror")
+  set(CMAKE_C_FLAGS "${CMAKE_C_FLAGS} -Wall -Wextra -Werror -fPIC")
   set(OS_LIBS pthread rt)
 elseif(${CMAKE_SYSTEM_NAME} MATCHES "rt-kernel")
   set(OS "rtk")
@@ -75,6 +80,10 @@ install(FILES
   ${OSAL_HEADERS}
   ${OSHW_HEADERS}
   DESTINATION ${SOEM_INCLUDE_INSTALL_DIR})
+
+# pkg-config
+configure_file("soem.pc.in" "soem.pc" @ONLY)
+install(FILES build/soem.pc DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
 
 if(BUILD_TESTS) 
   add_subdirectory(test/linux/slaveinfo)

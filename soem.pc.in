@@ -1,0 +1,11 @@
+prefix=@PREFIX@
+exec_prefix=@EXEC_PREFIX@
+libdir=${prefix}/lib
+includedir=${prefix}/include/soem
+
+Name: soem
+Description: SOEM C++ library
+Version: @VERSION@
+Requires:
+Libs: -L${libdir} -lsoem
+Cflags: -I${includedir} -std=c++11
