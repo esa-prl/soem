@@ -83,9 +83,9 @@ install(FILES
 
 # pkg-config
 configure_file("soem.pc.in" "soem.pc" @ONLY)
-install(FILES build/soem.pc DESTINATION "${CMAKE_INSTALL_PREFIX}/lib/pkgconfig")
+install(FILES "${CMAKE_CURRENT_BINARY_DIR}/soem.pc" DESTINATION lib/pkgconfig)
 
-if(BUILD_TESTS) 
+if(BUILD_TESTS)
   add_subdirectory(test/linux/slaveinfo)
   add_subdirectory(test/linux/eepromtool)
   add_subdirectory(test/linux/simple_test)
